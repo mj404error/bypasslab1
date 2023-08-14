@@ -11,7 +11,7 @@ def home():
 
 @app.route('/admin/login')
 def admin_login():
-    user = request.headers.get('Host')
+    user = request.headers.get('X-Forwarded-For')
     if 'localhost' in user.lower():
         return render_template('admin.html')
     else:
@@ -21,7 +21,7 @@ def admin_login():
 @app.route('/admin')
 def check_http_headers():
     # Get the Host header from the request
-    host = request.headers.get('Host')
+    host = request.headers.get('X-Forwarded-For')
 
     if 'localhost' in host.lower():
         return redirect(url_for('admin_login'))
